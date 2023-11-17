@@ -2,6 +2,7 @@ package com.devsuperior.movieflix.controllers;
 
 import com.devsuperior.movieflix.dto.MovieCardDTO;
 import com.devsuperior.movieflix.dto.MovieDetailsDTO;
+import com.devsuperior.movieflix.dto.MovieDetailsWithReviewsDTO;
 import com.devsuperior.movieflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,8 +28,8 @@ public class MovieController {
 
     @GetMapping("/{id}/reviews")
     @PreAuthorize("hasAnyRole('ROLE_VISITOR', 'ROLE_MEMBER')")
-    public ResponseEntity<MovieDetailsDTO> findByIdWithReviews(@PathVariable Long id) {
-        MovieDetailsDTO result = service.findByIdWithReviews(id);
+    public ResponseEntity<MovieDetailsWithReviewsDTO> findByIdWithReviews(@PathVariable Long id) {
+        MovieDetailsWithReviewsDTO result = service.findByIdWithReviews(id);
         return ResponseEntity.ok(result);
     }
 
