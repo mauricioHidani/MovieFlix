@@ -1,5 +1,6 @@
 package com.devsuperior.movieflix.repositories;
 
+import com.devsuperior.movieflix.dto.MovieDetailsDTO;
 import com.devsuperior.movieflix.entities.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +13,14 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("""
-            SELECT m
+            SELECT new com.devsuperior.movieflix.dto.MovieDetailsDTO(
+                m.id, m.title, m.subTitle, m.year, m.imgUrl, m.synopsis, m.genre.id, m.genre.name
+            )
             FROM Movie m
-            INNER JOIN Genre g
+            INNER JOIN Genre g ON g.id = m.genre.id
             WHERE m.id = :id
             """)
-    Optional<Movie> searchById(Long id);
+    Optional<MovieDetailsDTO> searchById(Long id);
 
     @Query("""
         SELECT m

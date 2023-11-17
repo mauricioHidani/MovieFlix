@@ -10,6 +10,31 @@ public class MovieDetailsDTO {
     private String synopsis;
     private GenreDTO genre;
 
+    public MovieDetailsDTO() {
+    }
+
+    public MovieDetailsDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,
+                           GenreDTO genre) {
+        this.id = id;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.year = year;
+        this.imgUrl = imgUrl;
+        this.synopsis = synopsis;
+        this.genre = genre;
+    }
+
+    public MovieDetailsDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,
+                           Long genreId, String genreName) {
+        this.id = id;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.year = year;
+        this.imgUrl = imgUrl;
+        this.synopsis = synopsis;
+        this.genre = new GenreDTO(genreId, genreName);
+    }
+
     public Long getId() {
         return id;
     }

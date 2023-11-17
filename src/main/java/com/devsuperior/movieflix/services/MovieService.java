@@ -23,22 +23,10 @@ public class MovieService {
 
     @Transactional(readOnly = true)
     public MovieDetailsDTO findById(Long id) {
-        Movie founded = repository.searchById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not founded"));
-
-        MovieDetailsDTO result = new MovieDetailsDTO();
-        result.setId( founded.getId() );
-        result.setTitle( founded.getTitle() );
-        result.setSubTitle( founded.getSubTitle() );
-        result.setYear( founded.getYear() );
-        result.setImgUrl( founded.getImgUrl() );
-        result.setSynopsis( founded.getSynopsis() );
-        GenreDTO genreDTO = new GenreDTO();
-        genreDTO.setId( founded.getGenre().getId() );
-        genreDTO.setName( founded.getGenre().getName() );
-        result.setGenre( genreDTO );
-
-        return result;
+        return repository.searchById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Movie not founded")
+                );
     }
 
     @Transactional(readOnly = true)
