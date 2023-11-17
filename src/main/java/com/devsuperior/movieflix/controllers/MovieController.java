@@ -20,8 +20,15 @@ public class MovieController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_VISITOR', 'ROLE_MEMBER')")
-    public ResponseEntity<MovieDetailsDTO> findByGenre(@PathVariable Long id) {
+    public ResponseEntity<MovieDetailsDTO> findById(@PathVariable Long id) {
         MovieDetailsDTO result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{id}/reviews")
+    @PreAuthorize("hasAnyRole('ROLE_VISITOR', 'ROLE_MEMBER')")
+    public ResponseEntity<MovieDetailsDTO> findByIdWithReviews(@PathVariable Long id) {
+        MovieDetailsDTO result = service.findByIdWithReviews(id);
         return ResponseEntity.ok(result);
     }
 
