@@ -1,5 +1,6 @@
 package com.devsuperior.movieflix.repositories;
 
+import com.devsuperior.movieflix.dto.MovieCardDTO;
 import com.devsuperior.movieflix.dto.MovieDetailsDTO;
 import com.devsuperior.movieflix.entities.Movie;
 import org.springframework.data.domain.Page;
@@ -23,10 +24,10 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<MovieDetailsDTO> searchById(Long id);
 
     @Query("""
-        SELECT m
+        SELECT new com.devsuperior.movieflix.dto.MovieCardDTO(m)
         FROM Movie m
         WHERE (:genreId IS NULL OR m.genre.id = :genreId)
         ORDER BY m.title ASC
         """)
-    Page<Movie> searchAllOrderByTitle(Pageable pageable, @Param("genreId") Long genreId);
+    Page<MovieCardDTO> searchAllOrderByTitle(Pageable pageable, @Param("genreId") Long genreId);
 }

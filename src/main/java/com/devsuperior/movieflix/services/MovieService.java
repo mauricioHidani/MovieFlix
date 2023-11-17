@@ -37,16 +37,7 @@ public class MovieService {
                 params.containsKey("size") ? Integer.parseInt(params.get("size")) : 6
         );
 
-        Page<MovieCardDTO> result = repository.searchAllOrderByTitle(pageable, genreId)
-                .map(movie -> {
-                   MovieCardDTO cardDTO = new MovieCardDTO();
-                   cardDTO.setId( movie.getId() );
-                   cardDTO.setTitle( movie.getTitle() );
-                   cardDTO.setSubTitle( movie.getSubTitle() );
-                   cardDTO.setYear( movie.getYear() );
-                   cardDTO.setImgUrl(movie.getImgUrl() );
-                   return cardDTO;
-                });
+        Page<MovieCardDTO> result = repository.searchAllOrderByTitle(pageable, genreId);
 
         if (result.isEmpty()) {
             throw new ResourceNotFoundException("Unable to find movies");
