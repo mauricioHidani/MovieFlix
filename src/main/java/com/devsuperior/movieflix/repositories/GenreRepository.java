@@ -10,8 +10,8 @@ import java.util.List;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     @Query("""
-           SELECT new com.devsuperior.movieflix.dto.GenreDTO(g.id, g.name)
-           FROM Genre g
-           """)
+        SELECT new com.devsuperior.movieflix.dto.GenreDTO(g.id, g.name)
+        FROM Genre g
+    """)
     List<GenreDTO> searchAll();
 }
