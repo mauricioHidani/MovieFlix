@@ -17,16 +17,7 @@ public class GenreService {
 
     @Transactional(readOnly = true)
     public List<GenreDTO> findAll() {
-        List<GenreDTO> result = repository.findAll()
-                .stream()
-                .map(genre -> {
-                    GenreDTO dto = new GenreDTO();
-                    dto.setId( genre.getId() );
-                    dto.setName( genre.getName() );
-                    return dto;
-                })
-                .toList();
-
+        List<GenreDTO> result = repository.searchAll();
         if (result.isEmpty()) {
             throw new ResourceNotFoundException("Unable to find movie genres");
         }
