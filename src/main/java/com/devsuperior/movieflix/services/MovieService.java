@@ -1,6 +1,9 @@
 package com.devsuperior.movieflix.services;
 
+import com.devsuperior.movieflix.dto.GenreDTO;
 import com.devsuperior.movieflix.dto.MovieCardDTO;
+import com.devsuperior.movieflix.dto.MovieDetailsDTO;
+import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.repositories.MovieRepository;
 import com.devsuperior.movieflix.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,26 @@ public class MovieService {
 
     @Autowired
     private MovieRepository repository;
+
+    @Transactional(readOnly = true)
+    public MovieDetailsDTO findById(Long id) {
+        Movie founded = repository.searchById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not founded"));
+
+        MovieDetailsDTO result = new MovieDetailsDTO();
+        result.setId( founded.getId() );
+        result.setTitle( founded.getTitle() );
+        result.setSubTitle( founded.getSubTitle() );
+        result.setYear( founded.getYear() );
+        result.setImgUrl( founded.getImgUrl() );
+        result.setSynopsis( founded.getSynopsis() );
+        GenreDTO genreDTO = new GenreDTO();
+        genreDTO.setId( founded.getGenre().getId() );
+        genreDTO.setName( founded.getGenre().getName() );
+        result.setGenre( genreDTO );
+
+        return result;
+    }
 
     @Transactional(readOnly = true)
     public Page<MovieCardDTO> findByGenre(Map<String, String> params) {
